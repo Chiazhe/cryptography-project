@@ -24,34 +24,27 @@ export default class CryptoCtrl {
             });
             if (data) {
                 return {
-                    status: "Success",
                     hashValue: hashValue,
                     encryptedString: data.encryptedString,
                 };
             } else {
                 return {
-                    status: "Failed",
-                    message:
-                        "Encrypted string does not exist with the hashValue.",
+                    error: "Encrypted string does not exist with the hashValue.",
                 };
             }
         } catch (e) {
-            console.error(`Unable to connect to cryptoDB database ${e}`);
-            return {
-                status: "Failed",
-                message: e.message,
-            };
+            return { error: e };
         }
     }
 
     static async addEncryptedStringAndHashValue(encryptedString) {
-        let hashValue = crypto
-            .createHash("sha256")
-            .update(encryptedString)
-            .digest("hex");
         try {
-            console.log(hashValue);
-            return await cryptoDB.insertOne({ hashValue, encryptedString });
+            let hashValue = crypto
+                .createHash("sha256")
+                .update(encryptedString)
+                .digest("hex");
+            await cryptoDB.insertOne({ hashValue, encryptedString });
+            return { hashValue };
         } catch (e) {
             console.error(`Unable to create the record: ${e}`);
             return { error: e };

@@ -6,7 +6,7 @@ export default class CryptoCtrl {
             const encryptedString = req.body.encryptedString;
             const CryptoResponse =
                 await CryptoDAO.addEncryptedStringAndHashValue(encryptedString);
-            res.json({ status: "success" });
+            res.json(CryptoResponse);
         } catch (e) {
             res.status(500).json({ error: e.message });
         }
@@ -19,7 +19,12 @@ export default class CryptoCtrl {
             const CryptoResponse =
                 await CryptoDAO.getEncryptedStringByHashValue(hashValue);
 
-            res.json(CryptoResponse);
+            const { error } = CryptoResponse;
+
+            if (error) {
+                return res.status(400).json(CryptoResponse);
+            }
+            return res.json(CryptoResponse);
         } catch (e) {
             res.status(500).json({ error: e.message });
         }
