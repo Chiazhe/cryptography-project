@@ -1,0 +1,141 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #d1fff6;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.container > h1 {
+  text-align: center;
+}
+
+.encrypt-container {
+  margin: 0 auto;
+  max-width: 550px;
+  border-radius: 15px;
+  background-image: radial-gradient(
+    circle,
+    #8a90fd,
+    #7d78f2,
+    #735fe6,
+    #6b44d9,
+    #6622c9
+  );
+  padding: 15px;
+  text-align: center;
+}
+
+.content {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  margin: 10px 0;
+}
+
+.content > label,
+.content > input {
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+}
+
+.content > input[type="text"] {
+  font-size: 1.2rem;
+  height: 1.7rem;
+  border-radius: 10px;
+  padding: 0 10px;
+}
+
+.encrypt-container > button {
+  width: 75%;
+  border: solid 1px;
+  border-color: rgb(201, 151, 255);
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 20px;
+  padding: 10px 20px;
+  background-image: linear-gradient(
+    to right,
+    #2ab6c4,
+    #00c9c6,
+    #00dbba,
+    #00eba1
+  );
+}
+
+.encrypt-container > button:hover {
+  cursor: pointer;
+  background-image: none;
+  background-color: #31125f;
+  color: aliceblue;
+}
+
+.error-msg {
+  margin: 5px 0;
+  display: block;
+  color: red;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.encryption-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.encryption-result > h2 {
+  margin-bottom: 0;
+}
+
+textarea {
+  width: 100%;
+  max-width: 700px;
+  font-size: 12px;
+  width: 100%;
+  height: 150px;
+  word-wrap: break-word;
+}
+
+.encryption-result > button {
+  border: solid 1px;
+  border-color: rgb(201, 151, 255);
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 20px;
+  margin: 10px;
+  padding: 10px 20px;
+  background-image: linear-gradient(
+    to right,
+    #2ab6c4,
+    #00c9c6,
+    #00dbba,
+    #00eba1
+  );
+}
+
+.encryption-result > button:hover {
+  cursor: pointer;
+  background-image: none;
+  background-color: #31125f;
+  color: aliceblue;
+}
+
+.url {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.url > a {
+  font-size: 12px;
+}
