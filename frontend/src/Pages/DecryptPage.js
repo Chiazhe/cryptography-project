@@ -1,16 +1,33 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import CryptoJS from "crypto-js";
 import { decrypted } from "../function/EncryptDecrypt";
 import Navbar from "../Navbar/Navbar";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 function DecryptPage() {
+  let { hashValue } = useParams();
   const [baseImage, setBaseImage] = useState(null);
   const [isDecryptedSuccess, setIsDecryptedSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [key, setKey] = useState("");
-  const [encryptedString, setEncryptedString] = useState("");
-  const [urlGenerated, setUrlGenerated] = useState(null);
+  const [encryptedString, setEncryptedString] = useState(hashValue==null?"":"Loading...");
+
+	useEffect(() => {
+    if(hashValue==null) return
+		axios
+			.get(
+				`https://cryptography-project-4010.herokuapp.com/api/v1/crypto/${hashValue}`
+			)
+			.then((response) => {
+				console.log(response.data);
+				setEncryptedString(response.data.encryptedString);
+			})
+			.catch((error) => {
+				console.log(error);
+				setEncryptedString("Invalid");
+			});
+	}, [hashValue]);
 
   function handleDecrypt() {
     setIsDecryptedSuccess(false);
@@ -24,22 +41,6 @@ function DecryptPage() {
     setIsDecryptedSuccess(true);
     setError(null)
   }
-
-  const postEncryptedStringToAPI = (tempEncryptedData) => {
-    axios
-      .post(`https://cryptography-project-4010.herokuapp.com/api/v1/crypto`, {
-        encryptedString: tempEncryptedData,
-      })
-      .then((response) => {
-        console.log(response.data);
-        setUrlGenerated(`http://localhost:3000/${response.data.hashValue}`);
-        // setEncryptedString(response.data.encryptedString);
-      })
-      .catch((error) => {
-        console.log(error);
-        // setEncryptedString("Invalid");
-      });
-  };
 
   return (
     <>
@@ -65,6 +66,7 @@ function DecryptPage() {
               onChange={(e) => {
                 setEncryptedString(e.target.value);
               }}
+              value={encryptedString}
             />
           </div>
           {error != null && (
@@ -78,21 +80,6 @@ function DecryptPage() {
           <div className="encryption-result">
             <h2>Decrypted Result</h2>
             <img src={baseImage} height="200px" alt="" />
-            <button
-              onClick={() => {
-                postEncryptedStringToAPI(encryptedString);
-              }}
-            >
-              Save to database/Generate URL
-            </button>
-            {urlGenerated ? (
-              <div className="url">
-                <p>URL generated: </p>
-                <a href={urlGenerated} target="blank">
-                  {urlGenerated}
-                </a>
-              </div>
-            ) : null}
           </div>
         )}
       </div>

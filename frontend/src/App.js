@@ -2,7 +2,6 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./Pages/EncryptPage";
-import ImageViewer from "./Pages/ImageViewer";
 import DecryptPage from "./Pages/DecryptPage";
 
 function App() {
@@ -11,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/decrypt" element={<DecryptPage />} />
-        <Route path="/:hashValue" element={<ImageViewer />} />
+        <Route path="/decrypt/:hashValue" element={<DecryptPage />} />
       </Routes>
     </BrowserRouter>
   );

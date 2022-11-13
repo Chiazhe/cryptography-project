@@ -59,21 +59,21 @@ function MainPage() {
   };
 
   // //post encrypted data to api
-  // const postEncryptedStringToAPI = (tempEncryptedData) => {
-  //   axios
-  //     .post(`https://cryptography-project-4010.herokuapp.com/api/v1/crypto`, {
-  //       encryptedString: tempEncryptedData,
-  //     })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setUrlGenerated(`http://localhost:3000/${response.data.hashValue}`);
-  //       // setEncryptedString(response.data.encryptedString);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       // setEncryptedString("Invalid");
-  //     });
-  // };
+  const postEncryptedStringToAPI = (tempEncryptedData) => {
+    axios
+      .post(`https://cryptography-project-4010.herokuapp.com/api/v1/crypto`, {
+        encryptedString: tempEncryptedData,
+      })
+      .then((response) => {
+        console.log(response.data);
+        setUrlGenerated(`http://localhost:3000/decrypt/${response.data.hashValue}`);
+        // setEncryptedString(response.data.encryptedString);
+      })
+      .catch((error) => {
+        console.log(error);
+        // setEncryptedString("Invalid");
+      });
+  };
 
   return (
     <>
@@ -127,6 +127,23 @@ function MainPage() {
               >
                 Copy text
               </button>
+
+              <button
+                onClick={() => {
+                  postEncryptedStringToAPI(tempEncryptedData);
+                }}
+              >
+                Save to database/Generate URL
+              </button>
+
+              {urlGenerated ? (
+                <div className="url">
+                  <p>URL generated: </p>
+                  <a href={urlGenerated} target="blank">
+                    {urlGenerated}
+                  </a>
+                </div>
+              ) : null}
             </div>
           )
         )}
