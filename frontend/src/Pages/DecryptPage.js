@@ -6,12 +6,14 @@ import axios from "axios";
 
 function DecryptPage() {
   const [baseImage, setBaseImage] = useState(null);
+  const [isDecryptedSuccess, setIsDecryptedSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [key, setKey] = useState("");
   const [encryptedString, setEncryptedString] = useState("");
   const [urlGenerated, setUrlGenerated] = useState(null);
 
   function handleDecrypt() {
+    setIsDecryptedSuccess(false);
     if (key.length !== 16) {
       setError("Please enter a key with 16 characters ...");
       return;
@@ -19,7 +21,8 @@ function DecryptPage() {
     const aesKey = CryptoJS.enc.Utf8.parse(key);
     const decryptedData = decrypted(encryptedString, aesKey);
     setBaseImage(decryptedData);
-    console.log(decryptedData);
+    setIsDecryptedSuccess(true);
+    setError(null)
   }
 
   const postEncryptedStringToAPI = (tempEncryptedData) => {
@@ -64,14 +67,14 @@ function DecryptPage() {
               }}
             />
           </div>
-          <button onClick={() => handleDecrypt()}>Decrypt</button>
           {error != null && (
             <>
-              <span>{error}</span>
+              <span className="error-msg">{error}</span>
             </>
           )}
+          <button onClick={() => handleDecrypt()}>Decrypt</button>
         </div>
-        {baseImage != null && (
+        {isDecryptedSuccess && (
           <div className="encryption-result">
             <h2>Decrypted Result</h2>
             <img src={baseImage} height="200px" alt="" />
