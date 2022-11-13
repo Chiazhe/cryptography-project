@@ -44,6 +44,7 @@ function DecryptPage() {
       <div className="container">
         <h1>AES Decryption</h1>
         <div className="encrypt-container">
+          <h3>Enter your key and encrpyted string to decrypt</h3>
           <div className="content">
             <label for="key">Please enter your key:</label>
             <input
