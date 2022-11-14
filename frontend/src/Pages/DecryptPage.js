@@ -38,6 +38,7 @@ function DecryptPage() {
     const aesKey = CryptoJS.enc.Utf8.parse(key);
     try{
       const decryptedData = decrypted(encryptedString, aesKey);
+      if (decryptedData==null||decryptedData=="") throw "Invalid string"
       setBaseImage(decryptedData);
       setIsDecryptedSuccess(true);
       setError(null)
