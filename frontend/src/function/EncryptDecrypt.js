@@ -3,12 +3,12 @@ import CryptoJS from "crypto-js";
 var iv = CryptoJS.enc.Utf8.parse('1234567887654321'); //optional
 
 // function for AES encryption
-export const encrypted = (data, key) => {
+export const encrypted = (data, key,keySize) => {
   console.log("Encrypting ...")
   console.log("KEY: " + key)
   var encryptedData = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(data), key,
     {
-      keySize: 128 / 8,
+      keySize: keySize,
       iv: iv,
       mode: CryptoJS.mode.CBC,
       padding: CryptoJS.pad.Pkcs7
@@ -17,12 +17,12 @@ export const encrypted = (data, key) => {
 };
 
 // function for AES decryption
-export const decrypted = (data, key) => {
+export const decrypted = (data, key,keySize) => {
   console.log("Decrypting ...")
   console.log("KEY: " + key)
   var decryptedData = CryptoJS.AES.decrypt(data, key,
     {
-      keySize: 128 / 8,
+      keySize: keySize,
       iv: iv,
       mode: CryptoJS.mode.CBC,
       padding: CryptoJS.pad.Pkcs7

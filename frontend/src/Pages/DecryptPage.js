@@ -12,6 +12,7 @@ function DecryptPage() {
   const [error, setError] = useState(null);
   const [key, setKey] = useState("");
   const [encryptedString, setEncryptedString] = useState(hashValue==null?"":"Loading...");
+  const [keySize, setKeySize] = useState(16);
 
 	useEffect(() => {
     if(hashValue==null) return
@@ -31,13 +32,13 @@ function DecryptPage() {
 
   function handleDecrypt() {
     setIsDecryptedSuccess(false);
-    if (key.length !== 16) {
-      setError("Please enter a key with 16 characters ...");
+    if (key.length !== keySize) {
+      setError(`Please enter a key with ${keySize} characters ...`);
       return;
     }
     const aesKey = CryptoJS.enc.Utf8.parse(key);
     try{
-      const decryptedData = decrypted(encryptedString, aesKey);
+      const decryptedData = decrypted(encryptedString, aesKey,keySize);
       if (decryptedData==null||decryptedData=="") throw "Invalid string"
       setBaseImage(decryptedData);
       setIsDecryptedSuccess(true);
@@ -46,6 +47,10 @@ function DecryptPage() {
       setError("Invalid key or string, please check ...");
     }
 
+  }
+
+  const handleChangeKeySize = (e)=>{
+    setKeySize(parseInt(e.target.value))
   }
 
   return (
@@ -64,6 +69,14 @@ function DecryptPage() {
                 setKey(e.target.value);
               }}
             />
+          </div>
+          <div className="content">
+            <label for="keySize">Please select your key size (bytes):</label>
+            <select name="keySize" id="keySize" value={keySize} onChange={handleChangeKeySize}>
+              <option value={16}>16</option>
+              <option value={24}>24</option>
+              <option value={32}>32</option>
+            </select>
           </div>
           <div className="content">
             <label for="key">Please enter your encrpyted string:</label>

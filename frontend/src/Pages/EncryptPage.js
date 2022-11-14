@@ -8,6 +8,8 @@ function MainPage() {
   const [baseImage, setBaseImage] = useState(null);
   const [error, setError] = useState(null);
   const [key, setKey] = useState("");
+  const [keySize, setKeySize] = useState(16);
+
   const [tempEncryptedData, setTempEncryptedData] = useState(null);
   const [urlGenerated, setUrlGenerated] = useState(null);
   const [isEncryptedSuccess, setIsEncryptedSuccess] = useState(false);
@@ -37,8 +39,9 @@ function MainPage() {
   const handleEncrypt = () => {
     setIsEncryptedSuccess(false);
     setIsEncrypting(true);
-    if (key.length !== 16) {
-      setError("Please enter a key with 16 characters ...");
+
+    if (key.length !== keySize) {
+      setError(`Please enter a key with ${keySize} characters ...`);
       setIsEncrypting(false);
       return;
     }
@@ -51,12 +54,16 @@ function MainPage() {
     while (currentTime + 2000 >= new Date().getTime()) {}
     const aesKey = CryptoJS.enc.Utf8.parse(key);
     setError(null);
-    const encryptedData = encrypted(baseImage, aesKey);
+    const encryptedData = encrypted(baseImage, aesKey,keySize);
     //set temporary encrypted data
     setTempEncryptedData(encryptedData);
     setIsEncryptedSuccess(true);
     setIsEncrypting(false);
   };
+
+  const handleChangeKeySize = (e)=>{
+    setKeySize(parseInt(e.target.value))
+  }
 
   // //post encrypted data to api
   const postEncryptedStringToAPI = (tempEncryptedData) => {
@@ -91,6 +98,14 @@ function MainPage() {
                 setKey(e.target.value);
               }}
             />
+          </div>
+          <div className="content">
+            <label for="keySize">Please select your key size (bytes):</label>
+            <select name="keySize" id="keySize" value={keySize} onChange={handleChangeKeySize}>
+              <option value={16}>16</option>
+              <option value={24}>24</option>
+              <option value={32}>32</option>
+            </select>
           </div>
           <div className="content">
             <label for="file">Please upload your file to encrypt:</label>
