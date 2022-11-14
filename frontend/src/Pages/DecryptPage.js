@@ -84,7 +84,9 @@ function DecryptPage() {
         {isDecryptedSuccess && (
           <div className="encryption-result">
             <h2>Decrypted Result</h2>
-            <img src={baseImage} height="200px" alt="" />
+            {/* <img src={baseImage} height="200px" alt="" /> */}
+            <a href={baseImage} download={`download.${baseImage.match(/[^:/]\w+(?=;|,)/)[0]}`}>Download</a>
+
           </div>
         )}
       </div>
