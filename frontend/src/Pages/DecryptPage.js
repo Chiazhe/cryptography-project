@@ -36,10 +36,15 @@ function DecryptPage() {
       return;
     }
     const aesKey = CryptoJS.enc.Utf8.parse(key);
-    const decryptedData = decrypted(encryptedString, aesKey);
-    setBaseImage(decryptedData);
-    setIsDecryptedSuccess(true);
-    setError(null)
+    try{
+      const decryptedData = decrypted(encryptedString, aesKey);
+      setBaseImage(decryptedData);
+      setIsDecryptedSuccess(true);
+      setError(null)
+    }catch(e){
+      setError("Invalid key or string, please check ...");
+    }
+
   }
 
   return (
