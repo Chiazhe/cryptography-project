@@ -133,7 +133,7 @@ function MainPage() {
             </select>
           </div>
           <div className="content">
-            <label for="file">Please upload your file to encrypt:</label>
+            <label for="file">Upload File:</label>
             <input
               id="file"
               type="file"
