@@ -151,6 +151,8 @@ textarea {
 }
 
 .url > a {
+  width: 550px;
+  word-wrap: break-word;
   font-size: 12px;
   background-color: #a492d5;
   color: black;
@@ -163,4 +165,47 @@ textarea {
 .url > a:hover {
   background-color: #5727d9;
   color: white;
+}
+
+@media only screen and (max-width: 500px) {
+  .content {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 10px 0;
+  }
+
+  * {
+    font-size: 0.9rem;
+  }
+
+  .encrypt-container > button {
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 5px 10px;
+  }
+
+  .encryption-result > button,
+  .encryption-result > div > button {
+    border-radius: 10px;
+    font-size: 12px;
+    margin: 10px;
+    padding: 5px 10px;
+  }
+
+  .url > a {
+    width: 400px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .url > a {
+    width: 300px;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .url > a {
+    width: 250px;
+  }
 }
