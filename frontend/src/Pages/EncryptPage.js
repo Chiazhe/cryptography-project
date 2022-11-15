@@ -54,16 +54,16 @@ function MainPage() {
     while (currentTime + 2000 >= new Date().getTime()) {}
     const aesKey = CryptoJS.enc.Utf8.parse(key);
     setError(null);
-    const encryptedData = encrypted(baseImage, aesKey,keySize);
+    const encryptedData = encrypted(baseImage, aesKey, keySize);
     //set temporary encrypted data
     setTempEncryptedData(encryptedData);
     setIsEncryptedSuccess(true);
     setIsEncrypting(false);
   };
 
-  const handleChangeKeySize = (e)=>{
-    setKeySize(parseInt(e.target.value))
-  }
+  const handleChangeKeySize = (e) => {
+    setKeySize(parseInt(e.target.value));
+  };
 
   // //post encrypted data to api
   const postEncryptedStringToAPI = (tempEncryptedData) => {
@@ -73,7 +73,9 @@ function MainPage() {
       })
       .then((response) => {
         console.log(response.data);
-        setUrlGenerated(`http://localhost:3000/decrypt/${response.data.hashValue}`);
+        setUrlGenerated(
+          `http://localhost:3000/decrypt/${response.data.hashValue}`
+        );
         // setEncryptedString(response.data.encryptedString);
       })
       .catch((error) => {
@@ -81,6 +83,14 @@ function MainPage() {
         // setEncryptedString("Invalid");
       });
   };
+
+  function downloadContent(name, content) {
+    var atag = document.createElement("a");
+    var file = new Blob([content], { type: "text/plain" });
+    atag.href = URL.createObjectURL(file);
+    atag.download = name;
+    atag.click();
+  }
 
   return (
     <>
@@ -101,7 +111,12 @@ function MainPage() {
           </div>
           <div className="content">
             <label for="keySize">Please select your key size (bytes):</label>
-            <select name="keySize" id="keySize" value={keySize} onChange={handleChangeKeySize}>
+            <select
+              name="keySize"
+              id="keySize"
+              value={keySize}
+              onChange={handleChangeKeySize}
+            >
               <option value={16}>16</option>
               <option value={24}>24</option>
               <option value={32}>32</option>
@@ -137,12 +152,23 @@ function MainPage() {
                 id="myInput"
                 readonly
               />
-              <button
-                onClick={() => navigator.clipboard.writeText(tempEncryptedData)}
-              >
-                Copy text
-              </button>
+              <div className="button-group">
+                <button
+                  onClick={() =>
+                    navigator.clipboard.writeText(tempEncryptedData)
+                  }
+                >
+                  Copy text
+                </button>
 
+                <button
+                  onClick={() =>
+                    downloadContent("encrypted-string.txt", tempEncryptedData)
+                  }
+                >
+                  Download as .txt file
+                </button>
+              </div>
               <button
                 onClick={() => {
                   postEncryptedStringToAPI(tempEncryptedData);

@@ -105,7 +105,15 @@ textarea {
   word-wrap: break-word;
 }
 
-.encryption-result > button {
+.button-group {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.encryption-result > button,
+.encryption-result > div > button {
   border: solid 1px;
   border-color: rgb(201, 151, 255);
   border-radius: 20px;
