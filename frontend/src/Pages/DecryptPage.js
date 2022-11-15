@@ -1,9 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import CryptoJS from "crypto-js";
 import { decrypted } from "../function/EncryptDecrypt";
-import Navbar from "../Navbar/Navbar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
 
 function DecryptPage() {
   let { hashValue } = useParams();
@@ -11,24 +11,26 @@ function DecryptPage() {
   const [isDecryptedSuccess, setIsDecryptedSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [key, setKey] = useState("");
-  const [encryptedString, setEncryptedString] = useState(hashValue==null?"":"Loading...");
+  const [encryptedString, setEncryptedString] = useState(
+    hashValue == null ? "" : "Loading..."
+  );
   const [keySize, setKeySize] = useState(16);
 
-	useEffect(() => {
-    if(hashValue==null) return
-		axios
-			.get(
-				`https://cryptography-project-4010.herokuapp.com/api/v1/crypto/${hashValue}`
-			)
-			.then((response) => {
-				console.log(response.data);
-				setEncryptedString(response.data.encryptedString);
-			})
-			.catch((error) => {
-				console.log(error);
-				setEncryptedString("Invalid");
-			});
-	}, [hashValue]);
+  useEffect(() => {
+    if (hashValue == null) return;
+    axios
+      .get(
+        `https://cryptography-project-4010.herokuapp.com/api/v1/crypto/${hashValue}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        setEncryptedString(response.data.encryptedString);
+      })
+      .catch((error) => {
+        console.log(error);
+        setEncryptedString("Invalid");
+      });
+  }, [hashValue]);
 
   function handleDecrypt() {
     setIsDecryptedSuccess(false);
@@ -37,21 +39,20 @@ function DecryptPage() {
       return;
     }
     const aesKey = CryptoJS.enc.Utf8.parse(key);
-    try{
-      const decryptedData = decrypted(encryptedString, aesKey,keySize);
-      if (decryptedData==null||decryptedData=="") throw "Invalid string"
+    try {
+      const decryptedData = decrypted(encryptedString, aesKey, keySize);
+      if (decryptedData == null || decryptedData == "") throw "Invalid string";
       setBaseImage(decryptedData);
       setIsDecryptedSuccess(true);
-      setError(null)
-    }catch(e){
+      setError(null);
+    } catch (e) {
       setError("Invalid key or string, please check ...");
     }
-
   }
 
-  const handleChangeKeySize = (e)=>{
-    setKeySize(parseInt(e.target.value))
-  }
+  const handleChangeKeySize = (e) => {
+    setKeySize(parseInt(e.target.value));
+  };
 
   return (
     <>
@@ -72,7 +73,12 @@ function DecryptPage() {
           </div>
           <div className="content">
             <label for="keySize">Please select your key size (bytes):</label>
-            <select name="keySize" id="keySize" value={keySize} onChange={handleChangeKeySize}>
+            <select
+              name="keySize"
+              id="keySize"
+              value={keySize}
+              onChange={handleChangeKeySize}
+            >
               <option value={16}>16</option>
               <option value={24}>24</option>
               <option value={32}>32</option>
@@ -99,8 +105,15 @@ function DecryptPage() {
           <div className="encryption-result">
             <h2>Decrypted Result</h2>
             {/* <img src={baseImage} height="200px" alt="" /> */}
-            <a href={baseImage} download={`download.${baseImage.match(/[^:/]\w+(?=;|,)/)[0]}`}>Download</a>
-
+            <button>
+              <a
+                style={{ textDecoration: "none" }}
+                href={baseImage}
+                download={`download.${baseImage.match(/[^:/]\w+(?=;|,)/)[0]}`}
+              >
+                Download
+              </a>
+            </button>
           </div>
         )}
       </div>

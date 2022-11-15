@@ -50,8 +50,6 @@ function MainPage() {
       setIsEncrypting(false);
       return;
     }
-    var currentTime = new Date().getTime();
-    while (currentTime + 2000 >= new Date().getTime()) {}
     const aesKey = CryptoJS.enc.Utf8.parse(key);
     setError(null);
     const encryptedData = encrypted(baseImage, aesKey, keySize);
@@ -179,7 +177,7 @@ function MainPage() {
 
               {urlGenerated ? (
                 <div className="url">
-                  <p>URL generated: </p>
+                  <h2>URL generated: </h2>
                   <a href={urlGenerated} target="blank">
                     {urlGenerated}
                   </a>
@@ -188,29 +186,6 @@ function MainPage() {
             </div>
           )
         )}
-
-        {/* <br></br>
-        <img src={baseImage} height="200px" alt="" />
-
-        <br />
-
-        {baseImage ? (
-          <button
-            onClick={() => {
-              postEncryptedStringToAPI(tempEncryptedData);
-            }}
-          >
-            Save to database/Generate URL
-          </button>
-        ) : null}
-
-        <br />
-
-        {urlGenerated ? (
-          <div>
-            URL generated: <a href={urlGenerated}>{urlGenerated}</a>
-          </div>
-        ) : null} */}
       </div>
     </>
   );

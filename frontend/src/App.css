@@ -130,11 +130,16 @@ textarea {
   );
 }
 
-.encryption-result > button:hover {
+.encryption-result > button > a {
+  color: black;
+}
+
+.encryption-result > button:hover,
+.encryption-result > button:hover > a {
   cursor: pointer;
   background-image: none;
-  background-color: #31125f;
-  color: aliceblue;
+  background-color: #31125f !important;
+  color: aliceblue !important;
 }
 
 .url {
@@ -146,4 +151,15 @@ textarea {
 
 .url > a {
   font-size: 12px;
+  background-color: #a492d5;
+  color: black;
+  padding: 5px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-bottom: 40px;
+}
+
+.url > a:hover {
+  background-color: #5727d9;
+  color: white;
 }
