@@ -8,6 +8,7 @@ function MainPage() {
   const [baseImage, setBaseImage] = useState(null);
   const [error, setError] = useState(null);
   const [key, setKey] = useState("");
+  const [iv, setIv] = useState("");
   const [keySize, setKeySize] = useState(16);
 
   const [tempEncryptedData, setTempEncryptedData] = useState(null);
@@ -51,8 +52,9 @@ function MainPage() {
       return;
     }
     const aesKey = CryptoJS.enc.Utf8.parse(key);
+    const aesIv = CryptoJS.enc.Utf8.parse(iv);
     setError(null);
-    const encryptedData = encrypted(baseImage, aesKey, keySize);
+    const encryptedData = encrypted(baseImage, aesKey, keySize, aesIv);
     //set temporary encrypted data
     setTempEncryptedData(encryptedData);
     setIsEncryptedSuccess(true);
@@ -104,6 +106,16 @@ function MainPage() {
               type="text"
               onChange={(e) => {
                 setKey(e.target.value);
+              }}
+            />
+          </div>
+          <div className="content">
+            <label for="iv">Please enter your initial value (optional):</label>
+            <input
+              id="iv"
+              type="text"
+              onChange={(e) => {
+                setIv(e.target.value);
               }}
             />
           </div>

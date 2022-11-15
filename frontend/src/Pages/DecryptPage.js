@@ -11,6 +11,7 @@ function DecryptPage() {
   const [isDecryptedSuccess, setIsDecryptedSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [key, setKey] = useState("");
+  const [iv, setIv] = useState("");
   const [encryptedString, setEncryptedString] = useState(
     hashValue == null ? "" : "Loading..."
   );
@@ -39,8 +40,9 @@ function DecryptPage() {
       return;
     }
     const aesKey = CryptoJS.enc.Utf8.parse(key);
+    const aesIv = CryptoJS.enc.Utf8.parse(iv);
     try {
-      const decryptedData = decrypted(encryptedString, aesKey, keySize);
+      const decryptedData = decrypted(encryptedString, aesKey, keySize, aesIv);
       if (decryptedData == null || decryptedData == "") throw "Invalid string";
       setBaseImage(decryptedData);
       setIsDecryptedSuccess(true);
@@ -68,6 +70,16 @@ function DecryptPage() {
               type="text"
               onChange={(e) => {
                 setKey(e.target.value);
+              }}
+            />
+          </div>
+          <div className="content">
+            <label for="iv">Please enter your initial value (optional):</label>
+            <input
+              id="iv"
+              type="text"
+              onChange={(e) => {
+                setIv(e.target.value);
               }}
             />
           </div>

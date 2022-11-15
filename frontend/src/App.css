@@ -135,7 +135,8 @@ textarea {
 }
 
 .encryption-result > button:hover,
-.encryption-result > button:hover > a {
+.encryption-result > button:hover > a,
+.encryption-result > div > button:hover {
   cursor: pointer;
   background-image: none;
   background-color: #31125f !important;
