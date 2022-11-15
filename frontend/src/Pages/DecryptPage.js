@@ -48,7 +48,7 @@ function DecryptPage() {
       setIsDecryptedSuccess(true);
       setError(null);
     } catch (e) {
-      setError("Invalid key or string, please check ...");
+      setError("Invalid iv, key or string, please check ...");
     }
   }
 
